@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dIBROP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../../css/style.css">
+
+
+</head>
+<body>
+    
+     <div class="bg">
+      <div class="container">
+        <header class="blog-header py-3 navbar-dark navbar-expand-lg" >
+        
+          <div class="row flex-nowrap justify-content-between align-items-center ">
+            <div class="col-4 ">
+<a href="#"  th:href="@{/}">
+			<img src="../../assets/logo.png" height="40px" /></a>            </div>
+            <div class="col-5 ">
+              
+                <div class="row">
+                  <div class="col-8 container-search border-pers"> 
+                    
+                     <input id=""  type="search" placeholder="Search....." class="search-input " name="q" th:value="${param.query}">
+                 
+                    <a class="text-white mt-2 float-right " href="#" aria-label="Bug">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"></path>
+                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"></path>
+                      </svg>             
+                    </a>
+                    
+                  </div>
+                 
+               
+              </div>
+
+            
+              
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+            
+            <div class="nav-item dropdown">
+          		<a class=" text-white nav-link " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
+                <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+              </svg>
+         		 </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div  sec:authorize="!isAuthenticated()"><a class="dropdown-item" th:href="@{/auth/login}"> Login</a></div>
+            	<a class="dropdown-item" href="#" th:href="@{/app/myproducts}">My Products</a>
+            	
+            	<div sec:authorize="isAuthenticated()">
+            	  <a class="dropdown-item" href="#" th:href="@{/app/mypurchase}">My Purchases</a>
+			      <a  class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">LogOut</a>
+				      <a  class="dropdown-item" > <h5 th:text="${#strings.abbreviate(#authentication.name, 12)}">Menú</h5>       
+            	 </a> </div>
+				 </div>
+      		</div>
+ <a class="text-white mr-3 " href="#" aria-label="Search" th:href="@{/app/shoppingcart}">
+ <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+ <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+ </svg>
+
+              </a>
+              <a type="button" class="btn btn-outline-light border-pers mr-3 " th:href="@{/app/myproducts/new}">Upload Product</a>
+            </div>
+          </div>
+        </header>
+    	<form th:action="@{/auth/logout}" method="POST" id="logoutForm"></form>
+    <!-- form -->
+    
+
+   <div class="album py-5 ">
+	<div class="container">
+		<div class="row ">
+			<div class="col-md-offset-3 col-md-6 bg-white p-5 mx-auto shadow-sm" >
+				
+	
+				<form method="post" enctype="multipart/form-data" action="#"
+				
+				th:action="${product.id != 0} ? @{/app/myproducts/new/submit} : @{/app/myproducts/new/submit}" 
+				th:object="${product}">		
+
+				<span th:text="${product.id} ? 'Edit' : 'New Product'"></span>
+			
+					<input type="hidden" id="id" name="id" th:field="*{id}" />
+					<div class="form-group">
+						<label for="title">Title</label> <input type="text"
+							class="form-control" id="title" placeholder="Title"
+							th:field="*{title}" />
+					</div>
+					<div class="form-group">
+						<label for="price">Price</label> <input type="number" step="0.01"
+							class="form-control" id="price" placeholder="1.00"
+							th:field="*{price}" />
+
+					</div>
+					
+						<div class="form-group">
+						<label for="description">Description</label> <input type="text" class="form-control" id="description" placeholder="email"
+							th:field="*{description}" />
+
+					</div>
+			
+					
+			
+			<div class="form-group">
+						<label for="city">City</label> 
+						
+						<select th:field="*{city}" class="form-control">
+						
+						<option value="-1">---</option>
+						<option th:each="cities: ${city}"
+						th:value="${cities.id}" th:text="${cities.name}"
+						>Cities</option>
+						</select>
+ 
+					</div>	
+			
+					<div class="form-group">
+						<label for="category">category</label> 
+						
+						<select th:field="*{category}" class="form-control">
+						
+						<option value="-1">---</option>
+						<option th:each="category: ${category}"
+						th:value="${category.id}" th:text="${category.name}"
+						>Category</option>
+						</select>
+ 
+					</div>		
+		
+									<div class="form-group">
+						<label for="file" >Image</label> <input id="filebutton"
+							name="file" class="form-control input-file" type="file" >
+					</div>			
+
+					<button type="submit" class="btn btn-large">Submit</button>
+				</form>
+				
+
+			</div>
+		</div>
+	</div>
+	</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

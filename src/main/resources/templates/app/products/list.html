@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dIBROP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../../css/style.css">
+
+
+</head>
+<body>
+    
+     <div class="bg">
+      <div class="container">
+        <header class="blog-header py-3 navbar-dark navbar-expand-lg" >
+        
+          <div class="row flex-nowrap justify-content-between align-items-center ">
+            <div class="col-4 ">
+<a href="#"  th:href="@{/}">
+			<img src="../assets/logo.png" height="40px" /></a>            </div>
+            <div class="col-5 ">
+              
+                <div class="row">
+                  <div class="col-8 container-search border-pers"> 
+                    
+                     <input id=""  type="search" placeholder="Search....." class="search-input " name="q" th:value="${param.query}">
+                 
+                    <a class="text-white mt-2 float-right " href="#" aria-label="Bug">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"></path>
+                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"></path>
+                      </svg>             
+                    </a>
+                    
+                  </div>
+                 
+               
+              </div>
+
+            
+              
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+            
+            <div class="nav-item dropdown">
+          		<a class=" text-white nav-link " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
+                <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+              </svg>
+         		 </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div  sec:authorize="!isAuthenticated()"><a class="dropdown-item" th:href="@{/auth/login}"> Login</a></div>
+            	<a class="dropdown-item" href="#" th:href="@{/app/myproducts}">My Products</a>
+            	
+            	<div sec:authorize="isAuthenticated()">
+            	  <a class="dropdown-item" href="#" th:href="@{/app/mypurchase}">My Purchases</a>
+			      <a  class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">LogOut</a>
+				      <a  class="dropdown-item" > <h5 th:text="${#strings.abbreviate(#authentication.name, 12)}">Menú</h5>       
+            	 </a> </div>
+				 </div>
+      		</div>
+ <a class="text-white mr-3 " href="#" aria-label="Search" th:href="@{/app/shoppingcart}">
+ <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+ <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+ </svg>
+
+              </a>
+              <a type="button" class="btn btn-outline-light border-pers mr-3 " th:href="@{/app/myproducts/new}">Upload Product</a>
+            </div>
+          </div>
+        </header>
+
+  <div class="nav-scroller p-4 mb-2 mt-1 category text-uppercase font-weight-bold ">
+          <nav class="nav d-flex justify-content-between  ">
+          
+          <div th:each="category: ${categories}">
+            <a class="p-3 text-muted float-left" href="#" th:href="@{/public/(idCategory=${category.id})}" th:text="${category.name}"></a>
+          </div>
+          </nav>
+        </div>
+
+    </div>
+    
+
+    	<form th:action="@{/auth/logout}" method="POST" id="logoutForm"></form>
+    
+    
+<!--Content-->
+          
+
+
+
+
+
+         
+<div class="album py-4 mt-2">
+    <div class="container">
+    
+
+<div class="row ">
+                <div class="col-md-4" th:each ="product: ${myproducts}">
+
+                  <div class="card mb-4 content-card float-left">
+
+        
+                    <div class="card-body" >
+
+                      <button class="btn btn-sm btn-light card-radius mb-3" th:text="${product.category.name}" ></button>
+                      <button class="btn btn-sm btn-light card-radius mb-3" th:text="${product.city.name}" ></button>
+
+                      <img src="" th:src="${#strings.isEmpty(product.image)} ? 'http://placehold.it/310x162' : ${product.image}" class=" img-fluid card-radius mt-2 mb-2"/>
+    <h5 class="card-title mb-2 mt-2 text-title">
+    
+    	<a href="#"  th:href="@{/public/product/{id}(id=${product.id})}" th:text="${product.title}" class="card-title mb-2 mt-2 text-title" >
+		</a>    
+    </h5>
+
+ <p class="card-text mt-2 text-description" th:text="${#strings.abbreviate(product.description,80)}"></p>
+                    
+        
+                    </div>
+
+                    <div class="card-footer">
+               
+                <a class="btn-radius btn btn-light float-right mt-2 ml-2 card-radius "
+							th:if="${product.purchase == null}" data-toggle="modal"
+							data-target="#delete-modal" th:data-id="${product.id}"
+							 aria-label="close">Delete</a>
+
+                     <a href="#" class="btn-radius btn btn-light float-right mt-2 card-radius "  th:href="${#authentication.name != product.seller.email} ? @{/app/shoppingcart/add/{id}(id=${product.id})} : @{/app/edit/{id}(id=${product.id})}  "
+                      th:text="${#authentication.name != product.seller.email} ? 'Add to card' : 'Edit'"></a>
+
+	
+					<div th:if="${#authentication.name != product.seller.email}">
+	
+                     </div>
+                      <small class=" text-muted float-left " th:text="${product.seller.name + ' '+ product.seller.surname}"></small>
+</br>
+                      <h3 class="card-link float-left " th:text="${#numbers.formatCurrency(product.price)}"></h3>
+
+                    </div>
+                  </div>
+                  
+                  
+                  
+                  
+                  </div>
+                  </div>
+
+<!-- MODAL -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+									<h4 class="modal-title">Delete Product</h4>
+				
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete this product?</p>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					<a href="#" class="btn btn-danger">Yes</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+    
+    <div class="container">
+
+    <footer class="pt-4 ">
+      <div class="row">
+      
+        <div class="col-6 col-md">
+          <h5>Features</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+            <li><a class="text-muted" href="#">Team feature</a></li>
+            <li><a class="text-muted" href="#">Stuff for developers</a></li>
+            <li><a class="text-muted" href="#">Another one</a></li>
+            <li><a class="text-muted" href="#">Last time</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-md">
+          <h5>Mesasges</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+       
+          </ul>
+        </div>
+
+        <div class="col-6 col-md">
+          <h5>Resources</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Resource</a></li>
+            <li><a class="text-muted" href="#">Resource name</a></li>
+            <li><a class="text-muted" href="#">Another resource</a></li>
+            <li><a class="text-muted" href="#">Final resource</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>About</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Team</a></li>
+            <li><a class="text-muted" href="#">Locations</a></li>
+            <li><a class="text-muted" href="#">Privacy</a></li>
+            <li><a class="text-muted" href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>   
+</div> 
+</div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('#delete-modal').on('show.bs.modal', function(event) {
+				var button = $(event.relatedTarget);
+				var data = button.data('id');
+
+				var modal = $(this);
+
+				var a = modal.find('.modal-body a')[0];
+				a.href = '/app/myproducts/' + data + '/delete';
+				
+
+			});
+		});
+	</script>
+</body>
+</html>
